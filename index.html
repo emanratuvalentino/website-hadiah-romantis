@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sebuah Pesan Untukmu...</title>
+    <style>
+      /* Menggunakan font Helvetica */
+      body {
+        font-family: Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f7e1d7; /* Warna latar belakang utama */
+        color: #4a5759; /* Warna teks utama */
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+      }
+
+      /* --- Judul Halaman --- */
+      .title-container {
+        position: absolute;
+        top: 10%;
+        width: 80%;
+      }
+
+      .main-title {
+        font-size: clamp(2.5rem, 5vw, 4rem); /* Ukuran responsif */
+        color: #ef476f; /* Warna romantis */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        letter-spacing: 2px;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* --- Kontainer Utama --- */
+      .container {
+        position: relative;
+        width: 90vw;
+        height: 70vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      /* --- Daftar Ikon Terstruktur --- */
+      .icon-list {
+        list-style: none;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 kolom */
+        gap: 40px;
+        margin-top: 50px;
+      }
+
+      .icon-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* --- Desain Ikon --- */
+      .icon {
+        font-size: 3rem;
+        width: 80px;
+        height: 80px;
+        background-color: #edafb8; /* Warna latar belakang ikon */
+        border-radius: 50%; /* Bentuk lingkaran */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, background-color 0.3s ease;
+      }
+
+      .icon:hover {
+        transform: scale(1.1);
+        background-color: #ef476f; /* Warna saat di-hover */
+      }
+
+      /* --- Modal/Pop-up Pesan --- */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 10;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(74, 87, 89, 0.8);
+        backdrop-filter: blur(5px);
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        background-color: #f7e1d7;
+        padding: 40px;
+        border-radius: 15px;
+        width: 80%;
+        max-width: 500px;
+        text-align: center;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+        position: relative;
+      }
+
+      .close-button {
+        color: #4a5759;
+        position: absolute;
+        top: 15px;
+        right: 25px;
+        font-size: 2rem;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      #modal-text {
+        font-size: 1.5rem;
+        color: #4a5759;
+        line-height: 1.5;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="title-container">
+      <h1 class="main-title">Sebuah Halaman, Berjuta Kata</h1>
+    </div>
+
+    <div class="container">
+      <ul class="icon-list">
+        <li class="icon-item">
+          <div
+            class="icon"
+            data-message="Di antara milyaran bintang, mataku hanya tertuju padamu."
+          >
+            ❤️
+          </div>
+        </li>
+        <li class="icon-item">
+          <div
+            class="icon"
+            data-message="Setiap detik bersamamu adalah puisi yang tak pernah ingin kuselesaikan."
+          >
+            ✨
+          </div>
+        </li>
+        <li class="icon-item">
+          <div
+            class="icon"
+            data-message="Kamu adalah melodi terindah dalam hidupku."
+          >
+            🎵
+          </div>
+        </li>
+        <li class="icon-item">
+          <div
+            class="icon"
+            data-message="Duniaku menjadi lebih berwarna sejak kehadiranmu."
+          >
+            🎨
+          </div>
+        </li>
+        <li class="icon-item">
+          <div
+            class="icon"
+            data-message="Aku menyimpan namamu di tempat teraman hatiku."
+          >
+            🔒
+          </div>
+        </li>
+        <li class="icon-item">
+          <div
+            class="icon"
+            data-message="Berada di dekatmu terasa seperti pulang ke rumah."
+          >
+            🏡
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div id="message-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <p id="modal-text">Teks pesan akan muncul di sini.</p>
+      </div>
+    </div>
+
+    <script>
+      const icons = document.querySelectorAll(".icon");
+      const modal = document.getElementById("message-modal");
+      const modalText = document.getElementById("modal-text");
+      const closeButton = document.querySelector(".close-button");
+
+      icons.forEach((icon) => {
+        icon.addEventListener("click", () => {
+          const message = icon.getAttribute("data-message");
+          modalText.textContent = message;
+          modal.style.display = "flex";
+        });
+      });
+
+      closeButton.addEventListener("click", () => {
+        modal.style.display = "none";
+      });
+
+      window.addEventListener("click", (event) => {
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+    </script>
+  </body>
+</html>
